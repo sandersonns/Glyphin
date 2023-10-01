@@ -11,6 +11,12 @@ class User < ApplicationRecord
 
   # List of restricted usernames that users are not allowed to use
   RESTRICTED_USERNAMES = %w(admin support help).freeze
+  
+  # Model associations
+  has_many :messages
+  has_many :marks
+  has_many :issued_tokens, class_name: 'Token', foreign_key: 'issuer_id'
+  has_many :received_tokens, class_name: 'Token', foreign_key: 'recipient_id'
 
   # Validations
 
@@ -31,11 +37,6 @@ class User < ApplicationRecord
 
   # Custom validation to check restricted usernames
   validate :username_not_restricted 
-
-  # Model associations
-  has_many :messages
-  has_many :marks
-  has_many :tokens
 
   # Override Devise's method to allow authentication using either username or email
   # This method is called by Devise to find the user in the database

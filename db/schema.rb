@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_30_184437) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_01_110443) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "tokens", force: :cascade do |t|
+    t.string "token_value"
+    t.bigint "issuer_id", null: false
+    t.bigint "recipient_id", null: false
+    t.datetime "expires_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issuer_id"], name: "index_tokens_on_issuer_id"
+    t.index ["recipient_id"], name: "index_tokens_on_recipient_id"
+    t.index ["token_value"], name: "index_tokens_on_token_value"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -32,4 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_30_184437) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "tokens", "users", column: "issuer_id"
+  add_foreign_key "tokens", "users", column: "recipient_id"
 end

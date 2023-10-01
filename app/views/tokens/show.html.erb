@@ -1,0 +1,18 @@
+<p>Your generated token is: <%= @token.token_value %></p>
+
+<!-- If the token has an associated recipient -->
+<% if @token.recipient %>
+  <p>This token is issued to: <%= @token.recipient.username %></p>
+<% else %>
+  <p>This token is general and can be redeemed by anyone.</p>
+<% end %>
+
+<!-- If the token has an expiration -->
+<% if @token.expires_at %>
+  <p>This token will expire on: <%= @token.expires_at.strftime("%B %d, %Y %H:%M %p") %></p>
+<% else %>
+  <p>This token does not have an expiration.</p>
+<% end %>
+
+<%= button_to "Redeem Token", redeem_token_path(@token.token_value), method: :post %>
+<%= link_to "Destroy Token", token_path(@token), method: :delete, data: { confirm: "Are you sure you want to destroy this token?" } %>

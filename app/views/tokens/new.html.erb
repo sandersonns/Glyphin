@@ -1,0 +1,13 @@
+<%= form_for @token do |f| %>
+  <div>
+    <%= f.label :recipient, "Recipient (optional, you can leave blank for general token)" %>
+    <%= f.text_field :recipient_value %>
+  </div>
+  <div>
+    <%= f.label :expires_at, "Expiration Date (optional, leave blank for no expiration)" %>
+    <%= f.datetime_select :expires_at %>
+  </div>
+  <div>
+    <%= f.submit "Generate Token" %>
+  </div>
+<% end %>

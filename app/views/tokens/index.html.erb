@@ -1,0 +1,24 @@
+<h1>My Tokens</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Token Value</th>
+      <th>Recipient</th>
+      <th>Expiration</th>
+      <th>Validate</th>
+      <th>Redeem</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tokens.each do |token| %>
+    <tr>
+      <td><%= token.token_value %></td>
+      <td><%= token.recipient ? token.recipient.username : 'Any' %></td>
+      <td><%= token.expires_at %></td>
+      <td><%= link_to 'Validate', validate_token_token_path(token), method: :get %></td>
+      <td><%= link_to 'Redeem', redeem_token_path(token), method: :post if token.recipient == current_user || token.recipient.nil? %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
