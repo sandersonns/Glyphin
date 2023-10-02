@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'glyphs/index'
+  get 'glyphs/show'
+  get 'glyphs/new'
+  get 'glyphs/edit'
+  get 'glyphs/create'
+  get 'glyphs/update'
+  get 'glyphs/destroy'
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
