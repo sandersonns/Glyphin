@@ -29,9 +29,30 @@ class GlyphsController < ApplicationController
   end
 
   def create
-    # Build a new glyph with the submitted parameters
-    @glyph = current_user.glyphs.build(glyph_params)
-
+    w3w_service = What3WordsService.new(ENV['WHAT3WORDS_API_KEY'])
+    
+    # Ensure latitude and longitude parameters are present
+    if params[:lat].present? && params[:lng].present?
+      # Convert coordinates to 3-word address
+      @words = w3w_service.coordinates_to_words(params[:lat], params[:lng])
+      
+      # Error handling for the API call
+      unless @words
+        flash[:error] = "Failed to fetch the 3-word address. Please try again."
+        render :new and return
+      end
+  
+      # Find or create the what3words address record
+      @w3w_address = What3words.find_or_create_by(address: @words)
+  
+    else
+      flash[:error] = "Latitude and Longitude are required."
+      render :new and return
+    end
+    
+    # Build a new glyph with the submitted parameters, associating it with the correct What3words address
+    @glyph = current_user.glyphs.build(glyph_params.merge(what3words_address: @w3w_address))
+  
     # Try to save the glyph to the database
     if @glyph.save
       redirect_to @glyph, notice: 'Glyph was successfully created.'
@@ -39,6 +60,7 @@ class GlyphsController < ApplicationController
       render :new
     end
   end
+  
 
   def update
     # Fetch the glyph to be updated that belongs to the currently logged-in user
