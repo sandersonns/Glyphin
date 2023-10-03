@@ -1,2 +1,4 @@
-<h1>Glyphs#show</h1>
-<p>Find me in app/views/glyphs/show.html.erb</p>
+<h1><%= @glyph.title %></h1>
+<p><%= @glyph.content %></p>
+<%= link_to 'Edit', edit_glyph_path(@glyph) %> |
+<%= link_to 'Back', glyphs_path %>

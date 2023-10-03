@@ -74,3 +74,5 @@ end
 gem 'devise'
 gem 'pundit'
 gem 'public_activity', '~> 1.5'
+
+gem "dotenv-rails", groups: [:development, :test]
