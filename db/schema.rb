@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_01_110443) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_02_115050) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "glyphs", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.integer "what3words_address_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "tokens", force: :cascade do |t|
     t.string "token_value"
@@ -38,7 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_01_110443) do
     t.string "first_name"
     t.string "last_name"
     t.text "bio"
-    t.boolean "messages_privacy"
+    t.boolean "glyph_privacy"
     t.index "lower((username)::text)", name: "index_users_on_lower_username", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
