@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_02_115050) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_04_131550) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "glyph_id", null: false
+    t.bigint "parent_comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["glyph_id"], name: "index_comments_on_glyph_id"
+    t.index ["parent_comment_id"], name: "index_comments_on_parent_comment_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
 
   create_table "glyphs", force: :cascade do |t|
     t.string "title"
@@ -21,6 +33,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_115050) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "content"
+    t.bigint "user_id", null: false
+    t.bigint "recipient_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_id"], name: "index_messages_on_recipient_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "tokens", force: :cascade do |t|
@@ -53,6 +75,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_02_115050) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "what3words", force: :cascade do |t|
+    t.string "address"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "comments", "comments", column: "parent_comment_id"
+  add_foreign_key "comments", "glyphs"
+  add_foreign_key "comments", "users"
+  add_foreign_key "messages", "users"
+  add_foreign_key "messages", "users", column: "recipient_id"
   add_foreign_key "tokens", "users", column: "issuer_id"
   add_foreign_key "tokens", "users", column: "recipient_id"
 end

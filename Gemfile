@@ -77,4 +77,6 @@ gem 'public_activity', '~> 1.5'
 
 gem "dotenv-rails", groups: [:development, :test]
 
-gem 'httparty', '~> 0.13.7'
+gem 'httparty', '~> 0.21.0'
+
+gem 'json', '~> 2.6', '>= 2.6.3'
