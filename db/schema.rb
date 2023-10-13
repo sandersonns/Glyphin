@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_04_131550) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_13_112312) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_131550) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "glyph_privacy", default: 0
   end
 
   create_table "messages", force: :cascade do |t|
@@ -69,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_04_131550) do
     t.string "first_name"
     t.string "last_name"
     t.text "bio"
-    t.boolean "glyph_privacy"
+    t.integer "default_glyph_privacy", default: 0
     t.index "lower((username)::text)", name: "index_users_on_lower_username", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
