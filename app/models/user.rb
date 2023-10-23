@@ -15,7 +15,7 @@ class User < ApplicationRecord
   # Model associations
   has_many :messages
   has_many :glyphs
-  has_many :commments
+  has_many :comments
   has_many :issued_tokens, class_name: 'Token', foreign_key: 'issuer_id'
   has_many :received_tokens, class_name: 'Token', foreign_key: 'recipient_id'
 
