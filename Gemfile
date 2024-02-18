@@ -80,3 +80,5 @@ gem "dotenv-rails", groups: [:development, :test]
 gem 'httparty', '~> 0.21.0'
 
 gem 'json', '~> 2.6', '>= 2.6.3'
+
+# gem 'what3words', '~> 3.0' (outdated: Ruby ~> 2.6 is required.)
