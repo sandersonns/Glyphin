@@ -81,6 +81,14 @@ class GlyphsController < ApplicationController
     redirect_to glyphs_url, notice: 'Glyph was successfully destroyed.'
   end
 
+  # Method to convert conventional address to What3Words
+  def convert_to_w3w
+    address = params[:address]
+    result = What3wordsService.convert_to_coordinates(address) # Use our service to do the conversion
+    render json: result
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_glyph
